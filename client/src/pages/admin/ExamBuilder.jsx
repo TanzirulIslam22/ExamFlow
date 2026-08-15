@@ -138,10 +138,10 @@ export default function ExamBuilder() {
       // Sync marks
       const updated = await client.get(`/exams/${examId}`);
       for (let i = 0; i < added.length; i++) {
-        const existing = updated.exam.questions.find((q, qi) => {
-          return String(q.questionId) === String(added[i].questionId) && Number(q.marks) !== Number(added[i].marks);
-        });
-        if (existing) await client.put(`/exams/${examId}/questions/${i}`, { marks: Number(added[i].marks) || 1 });
+        const qi = updated.exam.questions.findIndex((q) => String(q.questionId) === String(added[i].questionId));
+        if (qi !== -1 && Number(updated.exam.questions[qi].marks) !== Number(added[i].marks)) {
+          await client.put(`/exams/${examId}/questions/${qi}`, { marks: Number(added[i].marks) || 1 });
+        }
       }
 
       toast.success('Exam saved');

@@ -96,7 +96,7 @@ export default function Register() {
     const eObj = validate();
     setErrors(eObj);
     if (Object.keys(eObj).length) return;
-    const res = await register({ ...form, confirmPassword: undefined });
+    const res = await register({ ...form, confirmPassword: form.confirmPassword });
     if (!res.ok) return setErrors({ form: res.error });
     navigate('/admin');
   };
