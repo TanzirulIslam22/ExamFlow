@@ -21,7 +21,7 @@ export default function StudentLayout() {
         <div className="h-16 flex items-center px-5 border-b border-line">
           <Link to="/student"><Logo /></Link>
         </div>
-        <nav className="flex-1 py-4 px-3 space-y-1">
+        <nav className="flex-1 min-h-0 py-4 px-3 space-y-1 overflow-y-auto">
           {nav.map(({ to, label, icon: Icon, end }) => (
             <NavLink
               key={to} to={to} end={end} onClick={() => setOpen(false)}
@@ -36,7 +36,7 @@ export default function StudentLayout() {
             </NavLink>
           ))}
         </nav>
-        <div className="p-3 border-t border-line">
+        <div className="p-3 border-t border-line shrink-0">
           <div className="flex items-center gap-3 px-2 py-2">
             <Avatar name={user?.name} color={user?.avatarColor || '#1A56DB'} size={36} />
             <div className="min-w-0 flex-1">

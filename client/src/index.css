@@ -7,11 +7,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  @media (min-width: 1024px) {
-    html {
-      zoom: 1.2;
-    }
-  }
   body {
     @apply bg-bglight text-ink font-sans text-sm leading-[1.6];
   }
