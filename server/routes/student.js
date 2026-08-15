@@ -23,7 +23,9 @@ function isOpen(exam) {
 function accessAllowed(exam, student) {
   if (exam.accessType === 'open') return { ok: true };
   if (exam.accessType === 'batch') {
-    return student.batch && String(student.batch._id || student.batch) === String(exam.batch)
+    const examBatchId = String(exam.batch?._id || exam.batch);
+    const studentBatchId = String(student.batch?._id || student.batch || '');
+    return studentBatchId && examBatchId === studentBatchId
       ? { ok: true }
       : { ok: false, reason: 'batch_restricted' };
   }
@@ -33,7 +35,10 @@ function accessAllowed(exam, student) {
 router.get(
   '/me',
   asyncHandler(async (req, res) => {
-    const student = await req.student.populate('batch', 'name description').populate('institute', 'name logo city');
+    const student = await req.student.populate([
+      { path: 'batch', select: 'name description' },
+      { path: 'institute', select: 'name logo city' },
+    ]);
     res.json({ success: true, student });
   })
 );
@@ -64,8 +69,12 @@ router.get(
     const exams = await Exam.find(query).populate('batch', 'name').sort({ startAt: -1 }).lean();
     const attempts = await Attempt.find({ student: student._id }).lean();
     const attemptMap = {};
+    const submittedCount = {};
     for (const a of attempts) {
-      if (!attemptMap[String(a.exam)] || a.status === 'submitted') attemptMap[String(a.exam)] = a;
+      const key = String(a.exam);
+      if (a.status === 'submitted') submittedCount[key] = (submittedCount[key] || 0) + 1;
+      const current = attemptMap[key];
+      if (!current || (a.status === 'in_progress' && current.status !== 'in_progress')) attemptMap[key] = a;
     }
 
     const now = new Date();
@@ -73,6 +82,7 @@ router.get(
       const open = isOpen(exam);
       const allowed = accessAllowed(exam, student);
       const attempt = attemptMap[String(exam._id)];
+      const used = submittedCount[String(exam._id)] || 0;
       return {
         ...exam,
         open: open.ok,
@@ -81,9 +91,9 @@ router.get(
         allowed: allowed.ok,
         attempt,
         started: Boolean(attempt && attempt.status === 'in_progress'),
-        completed: Boolean(attempt && attempt.status === 'submitted'),
-        canStart: open.ok && allowed.ok && (!attempt || (attempt.status === 'submitted' && 1 < exam.maxAttempts)),
-        attemptsUsed: attempt ? 1 : 0,
+        completed: used > 0,
+        canStart: open.ok && allowed.ok && !(attempt && attempt.status === 'in_progress') && used < exam.maxAttempts,
+        attemptsUsed: used,
         timeUntilStart: open.reason === 'not_started' ? Math.max(0, new Date(open.at).getTime() - now.getTime()) : 0,
       };
     });
@@ -101,6 +111,14 @@ router.get(
     const open = isOpen(exam);
     if (!open.ok) throw new ApiError(403, open.reason === 'not_started' ? 'Exam has not started yet' : 'Exam has ended');
     if (!accessAllowed(exam, req.student).ok) throw new ApiError(403, 'This exam is restricted to specific batches');
+
+    const submittedCount = await Attempt.countDocuments({
+      exam: exam._id,
+      student: req.student._id,
+      status: 'submitted',
+    });
+    if (submittedCount >= exam.maxAttempts)
+      throw new ApiError(403, 'You have used all allowed attempts for this exam');
 
     const existing = await Attempt.findOne({ exam: exam._id, student: req.student._id, status: 'in_progress' });
     const attempt = existing || (await Attempt.create({
@@ -143,6 +161,14 @@ router.post(
     });
     if (!attempt) throw new ApiError(400, 'No active attempt found. Start the exam first.');
 
+    const submittedCount = await Attempt.countDocuments({
+      exam: exam._id,
+      student: req.student._id,
+      status: 'submitted',
+    });
+    if (submittedCount >= exam.maxAttempts)
+      throw new ApiError(403, 'You have used all allowed attempts for this exam');
+
     const { answers, questionOrder } = req.body;
     const qIds = exam.questions.map((q) => q.questionId);
     const questions = await Question.find({ _id: { $in: qIds }, institute: exam.institute }).lean();
@@ -167,7 +193,7 @@ router.post(
       let selectedIndex = null;
       let textAnswer = '';
 
-      if (!ans || (question.type === 'MCQ' && ans.selectedIndex === undefined && !ans.textAnswer)) {
+      if (!ans || (question.type === 'MCQ' && (ans.selectedIndex === undefined || ans.selectedIndex === null) && !ans.textAnswer)) {
         skipped = true;
       } else if (question.type === 'MCQ') {
         selectedIndex = ans.selectedIndex;
@@ -298,6 +324,8 @@ router.get(
         timeTakenSec: a.timeTakenSec,
         submittedAt: a.submittedAt,
         correctCount: a.correctCount,
+        wrongCount: a.wrongCount,
+        skippedCount: a.skippedCount,
       })),
     });
   })
