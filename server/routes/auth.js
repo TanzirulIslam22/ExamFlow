@@ -146,10 +146,11 @@ router.post(
       throw new ApiError(403, 'Your account is inactive. Contact your institute.');
 
     const token = signToken({ id: student._id, role: 'student' });
+    const { passwordHash, ...safeStudent } = student.toObject({ getters: true });
     res.json({
       success: true,
       token,
-      user: { role: 'student', ...student.toObject({ getters: true }) },
+      user: { role: 'student', ...safeStudent },
     });
   })
 );
