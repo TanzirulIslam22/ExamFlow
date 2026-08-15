@@ -130,8 +130,11 @@ router.get(
           { $match: { exam: exam._id, status: 'submitted' } },
           { $group: { _id: null, attempts: { $sum: 1 }, s: { $sum: '$score' }, t: { $sum: '$totalMarks' } } },
         ]);
+        const now = new Date();
+        const computedStatus = exam.status === 'draft' ? 'draft' : exam.endAt && new Date(exam.endAt) < now ? 'completed' : 'live';
         return {
           ...exam,
+          computedStatus,
           attempts: agg[0]?.attempts || 0,
           avgScore: agg[0] && agg[0].t ? Math.round((agg[0].s / agg[0].t) * 100) : null,
         };
@@ -145,7 +148,7 @@ router.get(
       { $limit: 5 },
     ]);
     const studentIds = topStudents.map((t) => t.best.student);
-    const students = await Student.find({ _id: { $in: studentIds } }).lean();
+    const students = await Student.find({ _id: { $in: studentIds } }).populate('batch', 'name').lean();
     const topPerforming = topStudents.map((t) => {
       const st = students.find((x) => String(x._id) === String(t.best.student));
       const pct = t.best.totalMarks ? Math.round((t.best.score / t.best.totalMarks) * 100) : 0;

@@ -77,7 +77,7 @@ router.get(
     if (!exam) throw new ApiError(404, 'Exam not found');
 
     const attempts = await Attempt.find({ exam: exam._id, status: 'submitted' })
-      .populate('student', 'name studentId email batch avatarColor')
+      .populate({ path: 'student', select: 'name studentId email batch avatarColor', populate: { path: 'batch', select: 'name' } })
       .sort({ score: -1, timeTakenSec: 1 })
       .lean();
 

@@ -20,7 +20,14 @@ router.get(
   asyncHandler(async (req, res) => {
     const { status, search } = req.query;
     const query = { institute: req.institute._id };
-    if (status) query.status = status;
+    if (status) {
+      if (status === 'completed') {
+        query.status = 'live';
+        query.endAt = { $lt: new Date() };
+      } else {
+        query.status = status;
+      }
+    }
     if (search) query.title = new RegExp(search, 'i');
 
     const exams = await Exam.find(query)
