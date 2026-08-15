@@ -193,7 +193,7 @@ async function seed() {
   console.log(`Exams created: ${exam.title}, ${exam2.title}`);
 
   const perAttempts = [9, 8, 6, 7, 5, 10, 8, 7, 4, 9, 8, 6];
-  for (let i = 0; i < students.length; i++) {
+  for (let i = 0; i < students.length - 3; i++) {
     const st = students[i];
     const correct = perAttempts[i] ?? 6;
     const total = exam.questions.length;
