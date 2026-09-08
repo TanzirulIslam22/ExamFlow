@@ -2,6 +2,7 @@
   "name": "examflow",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "ExamFlow — B2B SaaS online exam & quiz management platform for coaching centers, institutes and training organizations.",
   "license": "MIT",
   "workspaces": [
