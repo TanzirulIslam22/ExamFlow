@@ -2,6 +2,8 @@
 
 > B2B SaaS online exam & quiz management platform for coaching centers, educational institutes and training organizations. Inspired by Testmoz — built for Bangladesh.
 
+**Live:** Frontend + API — https://examflow-steel.vercel.app · API health — https://examflow-steel.vercel.app/api/health
+
 ExamFlow lets institutes register, manage students in batches, build a reusable question bank, publish timed exams, auto-grade MCQ, True/False & Short Answer questions, and dive deep into analytics — all from a clean, premium dashboard. Students sign in with email, Google or a phone-number OTP.
 
 ## Features
@@ -87,16 +89,20 @@ npm run dev
 - Client → http://localhost:5173
 - API → http://localhost:5000/api
 
-## Deployment (Vercel)
+## Deployment (Vercel) — live
 
-1. Push the repo to GitHub.
-2. Import the repo in Vercel (framework preset: **Other**).
-3. Set the build settings:
-   - **Build command:** `npm run build`
-   - **Output directory:** `client/dist`
-4. Add environment variables (server): `MONGODB_URI`, `JWT_SECRET`, `FIREBASE_PROJECT_ID`.
-5. Add environment variables (client): `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_STORAGE_BUCKET`, `VITE_FIREBASE_MESSAGING_SENDER_ID`, `VITE_FIREBASE_APP_ID`.
-6. Deploy. `/api/*` requests are handled by the serverless function; all other routes serve the React app.
+This repo deploys as **one Vercel project** (`tanzirstudio/examflow`) serving both layers:
+
+- **Frontend:** React SPA from `client/dist` → https://examflow-steel.vercel.app
+- **Backend:** Express API as a serverless function (`api/index.js`) → https://examflow-steel.vercel.app/api/*
+
+1. `vercel link --project examflow` (already linked; GitHub repo auto-connected so pushes to `main` redeploy).
+2. Set production env vars (already set — keep in sync via `vercel env ls`):
+   - Server: `MONGODB_URI`, `JWT_SECRET`, `FIREBASE_PROJECT_ID`
+   - Client (baked at build time): `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_STORAGE_BUCKET`, `VITE_FIREBASE_MESSAGING_SENDER_ID`, `VITE_FIREBASE_APP_ID`
+3. `vercel --prod --yes` — build command `npm run build`, output `client/dist`; `/api/*` rewrites to the serverless function.
+
+> Local dev is unchanged: `npm run dev` → client http://localhost:5173, API http://localhost:5000/api.
 
 ## Project Structure
 
