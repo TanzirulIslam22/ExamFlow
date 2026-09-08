@@ -4,6 +4,17 @@
 
 **Live:** Frontend + API — https://examflow-steel.vercel.app · API health — https://examflow-steel.vercel.app/api/health
 
+## Demo Login
+
+Try the live site instantly — no registration needed:
+
+| Role | Email | Password | Login at |
+| --- | --- | --- | --- |
+| Institute admin | `admin@prodigy.com` | `admin123` | https://examflow-steel.vercel.app/login |
+| Student | `ayesha@student.com` | `student123` | https://examflow-steel.vercel.app/login |
+
+> These accounts come from the seed script (`npm run seed`). If they don't exist on your setup, run the seed command once and they'll be created with sample batches, questions, a live exam and results.
+
 ExamFlow lets institutes register, manage students in batches, build a reusable question bank, publish timed exams, auto-grade MCQ, True/False & Short Answer questions, and dive deep into analytics — all from a clean, premium dashboard. Students sign in with email, Google or a phone-number OTP.
 
 ## Features
