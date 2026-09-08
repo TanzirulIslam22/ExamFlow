@@ -88,7 +88,7 @@ export default function StudentResult() {
   return (
     <div className="min-h-screen bg-bglight">
       <header className="bg-white border-b border-line">
-        <div className="max-w-4xl mx-auto px-4 h-16 flex items-center gap-3">
+        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center gap-3">
           <Link to="/student"><Logo size={30} /></Link>
           <Link to="/student" className="ml-auto btn-ghost !py-1.5">
             <ArrowLeft className="h-4 w-4" /> Back to exams
@@ -96,7 +96,7 @@ export default function StudentResult() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8 space-y-6">
+      <main className="max-w-6xl mx-auto px-4 py-8 space-y-6">
         {/* Hero result card */}
         <div className={`card overflow-hidden ${passed ? 'border-success/30' : 'border-danger/30'}`}>
           <div className={`px-8 py-10 text-center ${passed ? 'bg-gradient-to-b from-success/5 to-white' : 'bg-gradient-to-b from-danger/5 to-white'}`}>

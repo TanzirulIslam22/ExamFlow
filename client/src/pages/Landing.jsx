@@ -115,7 +115,7 @@ export default function Landing() {
     <div className="min-h-screen bg-white">
       {/* Navbar */}
       <header className={`fixed top-0 inset-x-0 z-40 transition-all ${scrolled ? 'bg-white/90 backdrop-blur border-b border-line shadow-sm' : 'bg-transparent'}`}>
-        <div className="max-w-6xl mx-auto h-16 px-4 sm:px-6 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto h-16 px-4 sm:px-6 flex items-center justify-between">
           <Logo />
           <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-gray">
             <button onClick={() => scrollTo('features')} className="hover:text-ink transition-colors">Features</button>
@@ -145,7 +145,7 @@ export default function Landing() {
 
       {/* Hero */}
       <section className="pt-32 pb-20 bg-gradient-to-b from-primary-50/70 via-white to-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-14 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-14 items-center">
           <div className="animate-slideUp">
             <span className="inline-flex items-center gap-2 bg-white border border-primary/20 text-primary-600 text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
               <Award className="h-3.5 w-3.5" /> Trusted by 300+ institutes in Bangladesh
@@ -182,7 +182,7 @@ export default function Landing() {
 
       {/* Features */}
       <section id="features" className="py-20 bg-bglight">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <p className="label !text-primary !mb-3">Everything you need</p>
             <h2 className="text-3xl font-bold tracking-tight text-ink">Built for how institutes actually run exams</h2>
@@ -204,7 +204,7 @@ export default function Landing() {
 
       {/* How it works */}
       <section className="py-20 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <p className="label !text-primary !mb-3">Simple workflow</p>
             <h2 className="text-3xl font-bold tracking-tight text-ink">Live in three steps</h2>
@@ -236,7 +236,7 @@ export default function Landing() {
 
       {/* Pricing */}
       <section id="pricing" className="py-20 bg-bglight">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <p className="label !text-primary !mb-3">Pricing</p>
             <h2 className="text-3xl font-bold tracking-tight text-ink">Simple pricing that scales with you</h2>
@@ -277,7 +277,7 @@ export default function Landing() {
 
       {/* Testimonials */}
       <section id="testimonials" className="py-20 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <p className="label !text-primary !mb-3">About</p>
             <h2 className="text-3xl font-bold tracking-tight text-ink">Institutes that switched to ExamFlow</h2>
@@ -304,7 +304,7 @@ export default function Landing() {
 
       {/* CTA */}
       <section className="py-16 bg-primary">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-3xl font-bold text-white tracking-tight">Ready to run your first online exam?</h2>
           <p className="mt-3 text-primary-100">Join 300+ institutes already using ExamFlow. No credit card required.</p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
@@ -316,7 +316,7 @@ export default function Landing() {
 
       {/* Footer */}
       <footer className="bg-ink text-gray-300">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
           <div className="grid md:grid-cols-4 gap-10">
             <div className="md:col-span-2">
               <div className="flex items-center gap-2.5">

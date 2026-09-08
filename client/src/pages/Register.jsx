@@ -140,8 +140,8 @@ export default function Register() {
       </div>
 
       {/* Right panel */}
-      <div className="flex-1 flex items-center justify-center px-4 py-10">
-        <div className="w-full max-w-lg">
+      <div className="flex-1 flex justify-center px-4 sm:px-8 py-10 overflow-y-auto">
+        <div className="w-full max-w-2xl my-auto">
           <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-gray hover:text-ink mb-8">
             <ArrowLeft className="h-4 w-4" /> Back to home
           </Link>

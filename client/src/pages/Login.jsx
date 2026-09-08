@@ -154,8 +154,8 @@ export default function Login() {
       </div>
 
       {/* Right panel */}
-      <div className="flex-1 flex items-center justify-center px-4 py-10">
-        <div className="w-full max-w-md">
+      <div className="flex-1 flex justify-center px-4 sm:px-8 py-10 overflow-y-auto">
+        <div className="w-full max-w-lg my-auto">
           <div className="lg:hidden mb-8 flex justify-center">
             <Link to="/"><Logo /></Link>
           </div>

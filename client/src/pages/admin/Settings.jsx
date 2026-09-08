@@ -47,7 +47,7 @@ export default function Settings() {
   };
 
   return (
-    <div className="max-w-2xl space-y-4">
+    <div className="max-w-4xl space-y-4">
       <div>
         <h2 className="text-xl font-bold tracking-tight text-ink">Settings</h2>
         <p className="text-sm text-gray">Manage your institute profile and branding</p>

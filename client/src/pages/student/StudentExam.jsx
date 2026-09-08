@@ -201,7 +201,7 @@ export default function StudentExam() {
       <div className="flex-1 flex flex-col lg:flex-row">
         {/* Main area */}
         <main className="flex-1 min-w-0 p-4 lg:p-8 flex justify-center">
-          <div className="w-full max-w-2xl">
+          <div className="w-full max-w-4xl">
             <div className="flex items-center justify-between mb-6">
               <p className="text-sm font-medium text-gray">
                 Question <span className="text-ink font-bold">{current + 1}</span> of {questions.length}
